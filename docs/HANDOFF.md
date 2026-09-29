@@ -83,7 +83,7 @@ tambahkan juga di Vercel (`npx vercel@latest env add NAMA production`).
 - ✅ Alur AI end-to-end diuji dengan kode asli (pertanyaan + roadmap berhasil dibuat).
 - ✅ Deploy Vercel production berhasil; `.env.local` tidak ikut ter-upload (`.vercelignore`).
 - ✅ Next.js di-upgrade 15.5.4 → 15.5.26 (Vercel memblokir versi yang rentan).
-- ⏳ Auto-deploy GitHub → Vercel: lihat bagian 8.
+- ✅ Auto-deploy GitHub → Vercel aktif: setiap push ke `main` otomatis deploy ke production.
 
 ## 6. Keputusan & catatan penting
 
@@ -126,8 +126,8 @@ Opsional sekaligus: ganti ke API key AI berbayar jika free tier Gemini sering si
 5. Error "AI belum dikonfigurasi" → pengguna tidak punya key Anthropic; ditambahkan dukungan Gemini
    (free tier) + fallback model otomatis; baris `AI_MODEL=gemini-2.5-flash` (model pensiun) dihapus.
 6. Commit & push ke GitHub; deploy ke Vercel (setelah upgrade Next.js).
-7. Menyambungkan GitHub ke Vercel untuk auto-deploy (butuh Vercel GitHub App terpasang di akun
-   `mfp-max`: https://github.com/apps/vercel/installations/new).
+7. Vercel GitHub App dipasang di akun `mfp-max` dan repo disambungkan (`vercel git connect`) —
+   auto-deploy aktif.
 
 ## 9. Cara melanjutkan di sesi baru
 
