@@ -1,161 +1,170 @@
-"use client";
-
-import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
-import Chat from "@/components/chat";
-import { Button } from "@/components/ui/button";
+import Link from "next/link";
+import { SignInButton, SignUpButton, SignedIn, SignedOut } from "@clerk/nextjs";
 import {
-  CheckCircle,
-  Zap,
-  Database,
-  Shield,
-  ExternalLink,
+  ArrowRight,
+  ClipboardList,
+  FileText,
+  GitBranch,
+  History,
+  MessagesSquare,
 } from "lucide-react";
-import { ThemeToggle } from "@/components/theme-toggle";
-import Image from "next/image";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { AppHeader } from "@/components/career/app-header";
+
+const FEATURES = [
+  {
+    icon: ClipboardList,
+    title: "Skrining Umum",
+    description:
+      "Form singkat tentang pendidikan, latar belakang, minat, bidang, dan range pengalaman Anda.",
+  },
+  {
+    icon: MessagesSquare,
+    title: "Pertanyaan Adaptif AI",
+    description:
+      "AI membaca jawaban awal lalu membuat 3–5 pertanyaan lanjutan untuk menggali preferensi, blocker, dan keahlian Anda.",
+  },
+  {
+    icon: GitBranch,
+    title: "Flowchart Jalur Karir",
+    description:
+      "Visualisasi interaktif tahapan dari posisi Anda sekarang hingga target karir utama.",
+  },
+  {
+    icon: FileText,
+    title: "Laporan Lengkap",
+    description:
+      "Skill tree, rekomendasi resource belajar, dan estimasi timeline dalam format Markdown.",
+  },
+  {
+    icon: History,
+    title: "Dashboard & Riwayat",
+    description:
+      "Simpan semua hasil analisis, ekspor ke PDF/Markdown, dan lakukan re-screening kapan saja.",
+  },
+];
+
+const STEPS = [
+  "Isi skrining umum",
+  "AI membuat pertanyaan spesifik",
+  "Jawab pertanyaan detail",
+  "AI memproses jawaban",
+  "Lihat flowchart & laporan",
+];
+
+function PrimaryCta({ size = "lg" }: { size?: "lg" | "default" }) {
+  return (
+    <>
+      <SignedIn>
+        <Button size={size} asChild>
+          <Link href="/dashboard/screening/new">
+            Mulai Skrining Karir
+            <ArrowRight />
+          </Link>
+        </Button>
+      </SignedIn>
+      <SignedOut>
+        <SignUpButton forceRedirectUrl="/dashboard/screening/new">
+          <Button size={size}>
+            Mulai Skrining Karir
+            <ArrowRight />
+          </Button>
+        </SignUpButton>
+      </SignedOut>
+    </>
+  );
+}
 
 export default function Home() {
-
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-cyan-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
-      {/* Hero Section */}
-      <div className="text-center py-12 sm:py-16 relative px-4">
-        <div className="absolute top-4 right-4 sm:top-6 sm:right-6">
-          <div className="flex items-center gap-2 sm:gap-3">
-            <ThemeToggle />
+    <div className="min-h-screen bg-background">
+      <AppHeader />
+
+      <section className="relative overflow-hidden border-b">
+        <div
+          aria-hidden
+          className="absolute inset-0 bg-[radial-gradient(circle,var(--border)_1px,transparent_1px)] [background-size:24px_24px] [mask-image:radial-gradient(ellipse_at_center,black_30%,transparent_75%)]"
+        />
+        <div className="relative mx-auto max-w-4xl px-4 py-20 text-center sm:px-6 sm:py-28">
+          <p className="mx-auto mb-5 w-fit rounded-full border bg-background px-3 py-1 text-xs font-medium text-muted-foreground">
+            Skrining karir berbasis AI
+          </p>
+          <h1 className="text-4xl font-bold tracking-tight text-balance sm:text-5xl lg:text-6xl">
+            Temukan dan rencanakan jalur karir Anda, langkah demi langkah
+          </h1>
+          <p className="mx-auto mt-6 max-w-2xl text-lg text-muted-foreground text-pretty">
+            Jawab beberapa pertanyaan, biarkan AI menggali lebih dalam, lalu dapatkan flowchart
+            jalur karir dan roadmap belajar yang personal — dari level pemula hingga target utama.
+          </p>
+          <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
+            <PrimaryCta />
+            <SignedIn>
+              <Button size="lg" variant="outline" asChild>
+                <Link href="/dashboard">Lihat Riwayat</Link>
+              </Button>
+            </SignedIn>
             <SignedOut>
-              <SignInButton>
-                <Button size="sm" className="text-xs sm:text-sm">
-                  Sign In
+              <SignInButton forceRedirectUrl="/dashboard">
+                <Button size="lg" variant="outline">
+                  Sudah punya akun? Masuk
                 </Button>
               </SignInButton>
             </SignedOut>
-            <SignedIn>
-              <UserButton />
-            </SignedIn>
           </div>
         </div>
+      </section>
 
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 mb-4">
-          <Image
-            src="/codeguide-logo.png"
-            alt="CodeGuide Logo"
-            width={50}
-            height={50}
-            className="rounded-xl sm:w-[60px] sm:h-[60px]"
-          />
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold bg-gradient-to-r from-blue-600 via-blue-500 to-blue-400 bg-clip-text text-transparent">
-            CodeGuide Starter
-          </h1>
+      <section className="mx-auto max-w-6xl px-4 py-20 sm:px-6">
+        <h2 className="text-center text-2xl font-bold tracking-tight sm:text-3xl">
+          Semua yang Anda butuhkan untuk merencanakan karir
+        </h2>
+        <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {FEATURES.map(({ icon: Icon, title, description }) => (
+            <Card key={title} className="py-0">
+              <CardContent className="space-y-3 p-6">
+                <div className="flex size-10 items-center justify-center rounded-lg bg-primary/10 text-primary">
+                  <Icon className="size-5" />
+                </div>
+                <h3 className="font-semibold">{title}</h3>
+                <p className="text-sm leading-6 text-muted-foreground">{description}</p>
+              </CardContent>
+            </Card>
+          ))}
         </div>
-        <p className="text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto px-4">
-          Build faster with your AI coding agent
+      </section>
+
+      <section className="border-y bg-muted/30">
+        <div className="mx-auto max-w-6xl px-4 py-20 sm:px-6">
+          <h2 className="text-center text-2xl font-bold tracking-tight sm:text-3xl">
+            Cara kerjanya
+          </h2>
+          <ol className="mt-12 grid gap-6 sm:grid-cols-5">
+            {STEPS.map((step, index) => (
+              <li key={step} className="flex flex-col items-center gap-3 text-center">
+                <span className="flex size-10 items-center justify-center rounded-full bg-primary text-sm font-semibold text-primary-foreground">
+                  {index + 1}
+                </span>
+                <span className="text-sm font-medium">{step}</span>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-3xl px-4 py-20 text-center sm:px-6">
+        <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">Siap memulai?</h2>
+        <p className="mt-3 text-muted-foreground">
+          Skrining hanya butuh sekitar 5 menit. Hasilnya bisa Anda simpan dan unduh.
         </p>
-      </div>
-
-      <main className="container mx-auto px-4 sm:px-6 pb-12 sm:pb-8 max-w-5xl">
-        <div className="text-center mb-8">
-          <div className="text-4xl sm:text-5xl mb-2">⚠️</div>
-          <div className="font-bold text-lg sm:text-xl mb-1">Setup Required</div>
-          <div className="text-sm sm:text-base text-muted-foreground">
-            Add environment variables to get started
-          </div>
+        <div className="mt-8 flex justify-center">
+          <PrimaryCta />
         </div>
+      </section>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mb-6">
-          {/* Clerk */}
-          <div className="text-center p-3 sm:p-4 rounded-lg bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-900/10 dark:to-indigo-900/10">
-            <div className="flex justify-center mb-3">
-              <Shield className="w-6 h-6 sm:w-8 sm:h-8 text-blue-500" />
-            </div>
-            <div className="font-semibold mb-2 text-sm sm:text-base">
-              Clerk Auth
-            </div>
-            <div className="text-xs text-muted-foreground mb-2">
-              <div className="font-mono bg-blue-100 dark:bg-blue-800 px-2 py-1 rounded mb-1">NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY</div>
-              <div className="font-mono bg-blue-100 dark:bg-blue-800 px-2 py-1 rounded">CLERK_SECRET_KEY</div>
-            </div>
-            <Button
-              size="sm"
-              variant="outline"
-              onClick={() =>
-                window.open("https://dashboard.clerk.com", "_blank")
-              }
-              className="w-full text-xs sm:text-sm"
-            >
-              <ExternalLink className="w-3 h-3 mr-1" />
-              Dashboard
-            </Button>
-          </div>
-
-          {/* Supabase */}
-          <div className="text-center p-3 sm:p-4 rounded-lg bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-900/10 dark:to-emerald-900/10">
-            <div className="flex justify-center mb-3">
-              <Database className="w-6 h-6 sm:w-8 sm:h-8 text-green-500" />
-            </div>
-            <div className="font-semibold mb-2 text-sm sm:text-base">
-              Supabase DB
-            </div>
-            <div className="text-xs text-muted-foreground mb-2">
-              <div className="font-mono bg-green-100 dark:bg-green-800 px-2 py-1 rounded mb-1">NEXT_PUBLIC_SUPABASE_URL</div>
-              <div className="font-mono bg-green-100 dark:bg-green-800 px-2 py-1 rounded">NEXT_PUBLIC_SUPABASE_ANON_KEY</div>
-            </div>
-            <Button
-              size="sm"
-              variant="outline"
-              onClick={() =>
-                window.open("https://supabase.com/dashboard", "_blank")
-              }
-              className="w-full text-xs sm:text-sm"
-            >
-              <ExternalLink className="w-3 h-3 mr-1" />
-              Dashboard
-            </Button>
-          </div>
-
-          {/* AI */}
-          <div className="text-center p-3 sm:p-4 rounded-lg bg-gradient-to-br from-purple-50 to-pink-50 dark:from-purple-900/10 dark:to-pink-900/10 sm:col-span-2 md:col-span-1">
-            <div className="flex justify-center mb-3">
-              <Zap className="w-6 h-6 sm:w-8 sm:h-8 text-purple-500" />
-            </div>
-            <div className="font-semibold mb-2 text-sm sm:text-base">
-              AI SDK
-            </div>
-            <div className="text-xs text-muted-foreground mb-2">
-              <div className="font-mono bg-purple-100 dark:bg-purple-800 px-2 py-1 rounded mb-1">OPENAI_API_KEY</div>
-              <div className="font-mono bg-purple-100 dark:bg-purple-800 px-2 py-1 rounded">ANTHROPIC_API_KEY</div>
-            </div>
-            <div className="grid grid-cols-2 gap-1 sm:gap-2">
-              <Button
-                size="sm"
-                variant="outline"
-                onClick={() =>
-                  window.open("https://platform.openai.com", "_blank")
-                }
-                className="text-xs px-1 sm:px-2"
-              >
-                OpenAI
-              </Button>
-              <Button
-                size="sm"
-                variant="outline"
-                onClick={() =>
-                  window.open("https://console.anthropic.com", "_blank")
-                }
-                className="text-xs px-1 sm:px-2"
-              >
-                Anthropic
-              </Button>
-            </div>
-          </div>
-        </div>
-
-        {/* Chat Section */}
-        <SignedIn>
-          <div className="mt-6 sm:mt-8">
-            <Chat />
-          </div>
-        </SignedIn>
-      </main>
+      <footer className="border-t py-8 text-center text-sm text-muted-foreground">
+        © {new Date().getFullYear()} Career Path AI
+      </footer>
     </div>
   );
 }

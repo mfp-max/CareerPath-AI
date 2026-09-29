@@ -121,3 +121,36 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* Print / "Save as PDF" for career plans: always light, keep flowchart colors. */
+@media print {
+  @page {
+    margin: 14mm;
+  }
+
+  .dark {
+    color-scheme: light;
+    --background: oklch(1 0 0);
+    --foreground: oklch(0.145 0 0);
+    --card: oklch(1 0 0);
+    --card-foreground: oklch(0.145 0 0);
+    --primary: oklch(0.205 0 0);
+    --primary-foreground: oklch(0.985 0 0);
+    --muted: oklch(0.97 0 0);
+    --muted-foreground: oklch(0.556 0 0);
+    --border: oklch(0.922 0 0);
+  }
+
+  body {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  h1, h2, h3, h4 {
+    break-after: avoid;
+  }
+
+  tr, li, pre, svg {
+    break-inside: avoid;
+  }
+}
