@@ -1,4 +1,15 @@
-# CLAUDE.md - CodeGuide Starter Kit
+# CLAUDE.md - Career Path AI (built on CodeGuide Starter Kit)
+
+> **Read [`docs/HANDOFF.md`](docs/HANDOFF.md) first.** It records what this app is, where it is deployed
+> (Vercel / GitHub / Clerk / Supabase), what has been configured and verified, key decisions, and the
+> plan for moving to a custom domain. Keep it updated when making significant changes.
+>
+> The user communicates in Indonesian and wants setup/configuration done end-to-end by Claude rather
+> than manual steps. Never print or commit secret values from `.env.local`.
+>
+> Note: `src/lib/supabase.ts` no longer exports a module-level `supabase` client (it crashed when env
+> vars were missing). Use `createSupabaseServerClient()` on the server or `getSupabaseClient()`;
+> the `import { supabase }` examples below are from the original starter kit.
 
 This file contains essential context about the project structure, technologies, and conventions to help Claude understand and work effectively within this codebase.
 
